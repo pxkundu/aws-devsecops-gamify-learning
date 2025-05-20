@@ -1,0 +1,400 @@
+# AWS DevSecOps Game - Challenge Configuration
+# This file defines all challenge categories and their metadata.
+# File format: YAML with schema validation
+
+# Schema version for future compatibility checks
+version: 1.0
+
+# Global game configuration settings
+game_config:
+  save_progress: true
+  auto_validate_aws_credentials: true
+  max_daily_hints: 3
+  points_system_enabled: true
+
+# Challenge categories definition
+# Each category contains challenges of progressive difficulty
+categories:
+  #------------------------------------------------------------
+  # IAM (Identity and Access Management) Challenges
+  #------------------------------------------------------------
+  IAM:
+    description: "Learn AWS Identity and Access Management security best practices"
+    icon: "🔑"
+    enabled: true
+    challenges:
+      - name: "Principle of Least Privilege"
+        id: "iam_least_privilege"
+        difficulty: "Beginner"
+        points: 100
+        estimated_time: "15-20 minutes"
+        prerequisites: []
+        aws_permissions:
+          - "iam:ListPolicies"
+          - "iam:GetPolicy"
+          - "iam:GetPolicyVersion"
+          - "sts:GetCallerIdentity"
+        learning_objectives:
+          - "Understand the principle of least privilege"
+          - "Identify overly permissive IAM policies"
+          - "Learn AWS managed policies best practices"
+        
+      - name: "Role-Based Access Control"
+        id: "iam_rbac"
+        difficulty: "Intermediate"
+        points: 200
+        estimated_time: "25-30 minutes"
+        prerequisites: ["iam_least_privilege"]
+        aws_permissions:
+          - "iam:ListRoles"
+          - "iam:GetRole"
+          - "iam:ListRolePolicies"
+          - "iam:GetRolePolicy"
+        learning_objectives:
+          - "Learn role-based access control principles"
+          - "Design secure role structures"
+          - "Implement session policies and trust relationships"
+        
+      - name: "IAM Permission Boundaries"
+        id: "iam_permission_boundaries"
+        difficulty: "Advanced"
+        points: 300
+        estimated_time: "30-40 minutes"
+        prerequisites: ["iam_rbac"]
+        aws_permissions:
+          - "iam:ListPolicies"
+          - "iam:GetPolicy"
+          - "iam:GetPolicyVersion"
+          - "iam:ListEntitiesForPolicy"
+        learning_objectives:
+          - "Understand permission boundaries"
+          - "Implement permission boundaries for delegation"
+          - "Create advanced IAM policy structures"
+
+  #------------------------------------------------------------
+  # Security Groups Challenges
+  #------------------------------------------------------------
+  SecurityGroups:
+    description: "Master AWS network security with Security Groups"
+    icon: "🛡️"
+    enabled: true
+    challenges:
+      - name: "Security Group Fundamentals"
+        id: "sg_fundamentals"
+        difficulty: "Beginner"
+        points: 100
+        estimated_time: "20 minutes"
+        prerequisites: []
+        aws_permissions:
+          - "ec2:DescribeSecurityGroups"
+          - "ec2:DescribeSecurityGroupRules"
+        learning_objectives:
+          - "Understand security group basics"
+          - "Identify common security group misconfigurations"
+          - "Learn default allow/deny principles"
+        
+      - name: "Least Privilege Network Access"
+        id: "sg_least_privilege"
+        difficulty: "Intermediate"
+        points: 200
+        estimated_time: "25 minutes"
+        prerequisites: ["sg_fundamentals"]
+        aws_permissions:
+          - "ec2:DescribeSecurityGroups"
+          - "ec2:DescribeNetworkInterfaces"
+          - "ec2:DescribeInstances"
+        learning_objectives:
+          - "Implement least privilege network access"
+          - "Design security group rules for specific services"
+          - "Audit and remediate overly permissive security groups"
+        
+      - name: "Security Group Architecture"
+        id: "sg_architecture"
+        difficulty: "Advanced"
+        points: 300
+        estimated_time: "35 minutes"
+        prerequisites: ["sg_least_privilege"]
+        aws_permissions:
+          - "ec2:DescribeSecurityGroups"
+          - "ec2:DescribeVpcs"
+          - "ec2:DescribeSubnets"
+          - "ec2:DescribeNetworkAcls"
+        learning_objectives:
+          - "Design multi-tier security group architectures"
+          - "Implement defense-in-depth for AWS networks"
+          - "Combine security groups with NACLs for layered security"
+
+  #------------------------------------------------------------
+  # Cloud Infrastructure Security Challenges
+  #------------------------------------------------------------
+  CloudSecurity:
+    description: "Secure AWS cloud infrastructure against threats"
+    icon: "☁️"
+    enabled: true
+    challenges:
+      - name: "S3 Bucket Security"
+        id: "cloud_s3_security"
+        difficulty: "Beginner"
+        points: 150
+        estimated_time: "20 minutes"
+        prerequisites: []
+        aws_permissions:
+          - "s3:ListAllMyBuckets"
+          - "s3:GetBucketPolicy"
+          - "s3:GetBucketPolicyStatus"
+          - "s3:GetBucketAcl"
+        learning_objectives:
+          - "Understand S3 bucket security best practices"
+          - "Identify and remediate public access settings"
+          - "Implement secure bucket policies"
+        
+      - name: "Encryption at Rest and in Transit"
+        id: "cloud_encryption"
+        difficulty: "Intermediate"
+        points: 250
+        estimated_time: "30 minutes"
+        prerequisites: ["cloud_s3_security"]
+        aws_permissions:
+          - "s3:GetEncryptionConfiguration"
+          - "kms:ListKeys"
+          - "kms:DescribeKey"
+          - "rds:DescribeDBInstances"
+        learning_objectives:
+          - "Implement AWS encryption best practices"
+          - "Configure KMS for secure key management"
+          - "Design patterns for encryption at rest and in transit"
+        
+      - name: "VPC Security"
+        id: "cloud_vpc_security"
+        difficulty: "Advanced"
+        points: 350
+        estimated_time: "40 minutes"
+        prerequisites: ["cloud_encryption", "sg_architecture"]
+        aws_permissions:
+          - "ec2:DescribeVpcs"
+          - "ec2:DescribeSubnets"
+          - "ec2:DescribeRouteTables"
+          - "ec2:DescribeVpcEndpoints"
+          - "ec2:DescribeFlowLogs"
+        learning_objectives:
+          - "Design secure VPC architectures"
+          - "Implement private endpoints and VPC service endpoints"
+          - "Configure VPC Flow Logs for monitoring"
+          - "Implement network segmentation"
+
+  #------------------------------------------------------------
+  # Compliance and Audit Challenges
+  #------------------------------------------------------------
+  Compliance:
+    description: "Meet industry compliance standards on AWS"
+    icon: "📋"
+    enabled: true
+    challenges:
+      - name: "AWS Config Basics"
+        id: "compliance_config"
+        difficulty: "Beginner"
+        points: 150
+        estimated_time: "25 minutes"
+        prerequisites: []
+        aws_permissions:
+          - "config:DescribeConfigRules"
+          - "config:GetComplianceDetailsByConfigRule"
+          - "config:DescribeComplianceByConfigRule"
+        learning_objectives:
+          - "Understand AWS Config for compliance"
+          - "Learn about Config Rules"
+          - "Identify non-compliant resources"
+        
+      - name: "CloudTrail Auditing"
+        id: "compliance_cloudtrail"
+        difficulty: "Intermediate"
+        points: 250
+        estimated_time: "30 minutes"
+        prerequisites: ["compliance_config"]
+        aws_permissions:
+          - "cloudtrail:DescribeTrails"
+          - "cloudtrail:GetTrailStatus"
+          - "cloudtrail:ListPublicKeys"
+          - "s3:GetBucketLogging"
+        learning_objectives:
+          - "Configure CloudTrail for comprehensive auditing"
+          - "Analyze CloudTrail logs for security events"
+          - "Implement log integrity validation"
+        
+      - name: "Industry Compliance Frameworks"
+        id: "compliance_frameworks"
+        difficulty: "Advanced"
+        points: 350
+        estimated_time: "45 minutes"
+        prerequisites: ["compliance_cloudtrail"]
+        aws_permissions:
+          - "securityhub:GetFindings"
+          - "securityhub:GetInsights"
+          - "securityhub:DescribeStandards"
+          - "securityhub:DescribeStandardsControls"
+        learning_objectives:
+          - "Understand major compliance frameworks (HIPAA, PCI DSS, SOC2)"
+          - "Map AWS controls to compliance requirements"
+          - "Implement automated compliance monitoring"
+          - "Use AWS Security Hub for compliance dashboards"
+
+  #------------------------------------------------------------
+  # Container Security Challenges
+  #------------------------------------------------------------
+  ContainerSecurity:
+    description: "Secure containerized applications on AWS"
+    icon: "🐳"
+    enabled: true
+    challenges:
+      - name: "Docker Image Security"
+        id: "container_image_security"
+        difficulty: "Beginner"
+        points: 150
+        estimated_time: "25 minutes"
+        prerequisites: []
+        aws_permissions:
+          - "ecr:DescribeRepositories"
+          - "ecr:DescribeImages"
+          - "ecr:ListImages"
+        learning_objectives:
+          - "Understand Docker image security principles"
+          - "Implement container image scanning"
+          - "Create secure Dockerfiles"
+        
+      - name: "ECR Security Best Practices"
+        id: "container_ecr_security"
+        difficulty: "Intermediate"
+        points: 250
+        estimated_time: "30 minutes"
+        prerequisites: ["container_image_security"]
+        aws_permissions:
+          - "ecr:GetRepositoryPolicy"
+          - "ecr:DescribeImageScanFindings"
+          - "ecr:GetLifecyclePolicy"
+        learning_objectives:
+          - "Secure ECR repositories"
+          - "Implement immutable tags"
+          - "Configure vulnerability scanning"
+          - "Manage image lifecycle policies"
+        
+      - name: "ECS/EKS Security"
+        id: "container_orchestration_security"
+        difficulty: "Advanced"
+        points: 350
+        estimated_time: "45 minutes"
+        prerequisites: ["container_ecr_security", "iam_permission_boundaries"]
+        aws_permissions:
+          - "ecs:DescribeClusters"
+          - "ecs:DescribeServices"
+          - "ecs:DescribeTaskDefinition"
+          - "eks:DescribeCluster"
+        learning_objectives:
+          - "Secure container orchestration platforms"
+          - "Implement ECS/EKS security controls"
+          - "Configure least privilege for task roles"
+          - "Design secure container networking"
+
+  #------------------------------------------------------------
+  # CI/CD Security Challenges
+  #------------------------------------------------------------
+  CICDSecurity:
+    description: "Secure your development pipeline on AWS"
+    icon: "🔄"
+    enabled: true
+    challenges:
+      - name: "CodeBuild Security"
+        id: "cicd_codebuild_security"
+        difficulty: "Beginner"
+        points: 150
+        estimated_time: "25 minutes"
+        prerequisites: []
+        aws_permissions:
+          - "codebuild:ListProjects"
+          - "codebuild:BatchGetProjects"
+          - "codebuild:ListBuilds"
+          - "codebuild:BatchGetBuilds"
+        learning_objectives:
+          - "Secure AWS CodeBuild projects"
+          - "Implement least privilege for build roles"
+          - "Secure build environments"
+        
+      - name: "Pipeline Secrets Management"
+        id: "cicd_secrets_management"
+        difficulty: "Intermediate"
+        points: 250
+        estimated_time: "30 minutes"
+        prerequisites: ["cicd_codebuild_security"]
+        aws_permissions:
+          - "secretsmanager:ListSecrets"
+          - "secretsmanager:DescribeSecret"
+          - "ssm:DescribeParameters"
+          - "kms:ListKeys"
+        learning_objectives:
+          - "Implement secure secrets management"
+          - "Use AWS Secrets Manager and Parameter Store"
+          - "Rotate credentials automatically"
+          - "Audit secrets access"
+        
+      - name: "Secure CI/CD Pipeline"
+        id: "cicd_pipeline_security"
+        difficulty: "Advanced"
+        points: 350
+        estimated_time: "45 minutes"
+        prerequisites: ["cicd_secrets_management", "container_orchestration_security"]
+        aws_permissions:
+          - "codepipeline:ListPipelines"
+          - "codepipeline:GetPipeline"
+          - "codepipeline:ListWebhooks"
+          - "codestar-connections:ListConnections"
+        learning_objectives:
+          - "Design end-to-end secure CI/CD pipelines"
+          - "Implement security scanning at each pipeline stage"
+          - "Secure source code repositories"
+          - "Implement secure deployment practices"
+          - "Validate infrastructure as code"
+
+# Progression paths (recommended challenge sequences)
+progression_paths:
+  beginner_path:
+    name: "DevSecOps Fundamentals"
+    description: "Start your DevSecOps journey with foundational skills"
+    challenges:
+      - "iam_least_privilege"
+      - "sg_fundamentals"
+      - "cloud_s3_security"
+      - "compliance_config"
+      - "container_image_security"
+      - "cicd_codebuild_security"
+    completion_reward:
+      points: 200
+      badge: "DevSecOps Foundation"
+  
+  advanced_path:
+    name: "Security Architect"
+    description: "Master advanced AWS security architecture principles"
+    challenges:
+      - "iam_permission_boundaries"
+      - "sg_architecture"
+      - "cloud_vpc_security"
+      - "compliance_frameworks"
+      - "container_orchestration_security"
+      - "cicd_pipeline_security"
+    completion_reward:
+      points: 500
+      badge: "AWS Security Architect"
+
+# Schema validation section
+# This defines the expected data structure for challenges
+schema:
+  challenge:
+    required:
+      - name
+      - id
+      - difficulty
+      - points
+      - aws_permissions
+      - learning_objectives
+    optional:
+      - prerequisites
+      - estimated_time
+
