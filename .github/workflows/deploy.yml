@@ -18,41 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install streamlit
-
-      - name: Create web interface
-        run: |
-          mkdir -p web
-          echo "import streamlit as st" > web/app.py
-          echo "from game.engine import GameEngine" >> web/app.py
-          echo "from game.utils.aws_handler import AWSHandler" >> web/app.py
-          echo "from game.utils.game_state import GameState" >> web/app.py
-          echo "" >> web/app.py
-          echo "st.set_page_config(page_title='AWS DevSecOps Game', layout='wide')" >> web/app.py
-          echo "" >> web/app.py
-          echo "st.title('AWS DevSecOps Game')" >> web/app.py
-          echo "st.write('Welcome to the AWS DevSecOps Game! This is a learning platform for AWS security best practices.')" >> web/app.py
-          echo "" >> web/app.py
-          echo "if 'game_state' not in st.session_state:" >> web/app.py
-          echo "    st.session_state.game_state = GameState()" >> web/app.py
-          echo "    st.session_state.aws_handler = AWSHandler()" >> web/app.py
-          echo "" >> web/app.py
-          echo "st.write('Game Status:', st.session_state.game_state.get_status())" >> web/app.py
-
-      - name: Build with Streamlit
-        run: |
-          streamlit run web/app.py --server.port 8080 --server.address 0.0.0.0
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS DevSecOps Game</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.1.0/css/xterm.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #terminal {
+            width: 100%;
+            height: 600px;
+            background-color: #000000;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .info-box {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 AWS DevSecOps Game</h1>
+            <p>Learn AWS security best practices through interactive challenges!</p>
+        </div>
+        
+        <div id="terminal"></div>
+        
+        <div class="info-box">
+            <h3>How to Play:</h3>
+            <p>1. The game will start automatically in the terminal above</p>
+            <p>2. Use your keyboard to interact with the game</p>
+            <p>3. Follow the instructions provided in each scenario</p>
+            <p>4. Type 'help' at any time to see available commands</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.1.0/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.js"></script>
+    <script>
+        // Initialize xterm.js
+        const term = new Terminal({
+            cursorBlink: true,
+            fontSize: 14,
+            fontFamily: 'Courier New',
+            theme: {
+                background: '#000000',
+                foreground: '#ffffff'
+            }
+        });
+
+        // Add the fit addon
+        const fitAddon = new FitAddon.FitAddon();
+        term.loadAddon(fitAddon);
+
+        // Open the terminal in the container
+        term.open(document.getElementById('terminal'));
+        fitAddon.fit();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            fitAddon.fit();
+        });
+
+        // Welcome message
+        term.writeln('Welcome to AWS DevSecOps Game!');
+        term.writeln('Loading game...');
+        term.writeln('');
+
+        // Note: This is where we would need to implement the actual game logic
+        // For now, we'll just show a message that this is a demo
+        term.writeln('Note: This is a demo interface. The actual game implementation');
+        term.writeln('requires a backend server to handle AWS interactions securely.');
+        term.writeln('');
+        term.writeln('To play the game locally, please follow the instructions in the README.md');
+        term.writeln('file to set up the game on your machine.');
+    </script>
+</body>
+</html> 
